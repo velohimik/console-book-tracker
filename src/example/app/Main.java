@@ -1,55 +1,79 @@
 package example.app;
 
-import example.model.Book;
 import example.service.BookService;
 import example.service.impl.InMemoryBookService;
+import example.validator.UserInputValidator;
 
 import java.util.Scanner;
 
 public class Main {
 
+    private static final String WELCOME_MESSAGE = "\nWelcome to Your Library!!! Oops, let's be more quite. Please enter the relevant digit:\n";
+    private static final String MENU_MESSAGE = """
+            \t1 - Add new book;
+            \t2 - Look at the list of all books;
+            \t3 - Search the book by its ID.""";
+    private static final String QUIT_MESSAGE = "quit";
+    private static final String BLOCK_SEPARATE = "============================";
+    private static final String HOW_TO_EXIT_APP_MESSAGE = String.format("\nIf you want exit the app please enter \"%s\"\n", QUIT_MESSAGE);
+    private static final String USER_INPUT_MESSAGE = "\tYour choice: ";
+    private static final String MENU_FIRST_ITEM = "1";
+    private static final String MENU_SECOND_ITEM = "2";
+    private static final String MENU_THIRD_ITEM = "3";
+    private static final String BOOK_TITLE = "\tEnter book title (can't be blank): ";
+    private static final String BOOK_AUTHOR = "\tEnter book author (can't be blank): ";
+    private static final String BOOK_YEAR = "\tEnter the year book was published (should be 4-digits number): ";
+    private static final String BOOK_ID = "\tEnter the book id you want to see (should be a number): ";
+    private static final String FOLLOW_INSTRUCTIONS_MESSAGE = "!!! Wrong input. Please make the enter according to the instruction:\n";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String userChoice = "";
+        UserInputValidator validator = new UserInputValidator();
+        String userChoice;
         BookService bookService = new InMemoryBookService();
 
-        System.out.println("\nWelcome to Your Library!!! Oops, let's be more quite. Please enter the relevant digit:\n");
-        System.out.println("""
-                \t1 - Add new book;
-                \t2 - Look at the list of all books;
-                \t3 - Search the book by its ID.""");
+        System.out.println(WELCOME_MESSAGE);
 
-        while (!userChoice.equals("quit")) {
-            System.out.println("\nIf you want exit the app please enter \"quit\"\n");
-            System.out.print("\tYour choice: ");
-            userChoice = scanner.nextLine();
+        while (true) {
+            System.out.println(MENU_MESSAGE);
+            System.out.println(HOW_TO_EXIT_APP_MESSAGE);
+            System.out.print(USER_INPUT_MESSAGE);
+            userChoice = scanner.nextLine().trim();
+            System.out.println(BLOCK_SEPARATE);
             switch (userChoice) {
-                case "quit":
+                case QUIT_MESSAGE:
+                    System.exit(0);
+                case MENU_FIRST_ITEM:
+                    String bookTitle;
+                    String bookAuthor;
+                    String bookYear;
+                    do {
+                        System.out.print(BOOK_TITLE);
+                        bookTitle = scanner.nextLine().trim();
+                    } while (validator.validateStringIsBlank(bookTitle));
+                    do {
+                        System.out.print(BOOK_AUTHOR);
+                        bookAuthor = scanner.nextLine().trim();
+                    } while (validator.validateStringIsBlank(bookAuthor));
+                    do {
+                        System.out.print(BOOK_YEAR);
+                        bookYear = scanner.nextLine().trim();
+                    } while (!validator.validateYearIsFourDigits(bookYear));
+                    System.out.println(bookService.saveNewBook(bookTitle, bookAuthor, bookYear));
                     break;
-                case "1":
-                    System.out.print("\tEnter book title: ");
-                    String bookTitle = scanner.nextLine();
-                    System.out.print("\tEnter book author: ");
-                    String bookAuthor = scanner.nextLine();
-                    System.out.print("\tEnter the year book was written: ");
-                    String bookYear = scanner.nextLine();
-                    System.out.println("\n");
-                    System.out.println(bookService.processNewBook(Book.createNewBook(bookTitle, bookAuthor, bookYear)));
-                    break;
-                case "2":
+                case MENU_SECOND_ITEM:
                     System.out.println(bookService.getAllBooks());
                     break;
-                case "3":
-                    System.out.print("\tEnter the book id you want to see: ");
-                    String bookId = scanner.nextLine();
-                    if (!bookId.isBlank()) {
-                        System.out.println(bookService.findBookById(Integer.parseInt(bookId)));
-                    } else {
-                        System.out.println("Please enter the book ID");
-                    }
+                case MENU_THIRD_ITEM:
+                    String bookId;
+                    do {
+                        System.out.print(BOOK_ID);
+                        bookId = scanner.nextLine().trim();
+                    } while (validator.validateIdIsNotNumeric(bookId));
+                    System.out.println(bookService.findBookById(bookId));
                     break;
                 default:
-                    System.out.println("Please make the enter according to the instruction");
+                    System.out.println(FOLLOW_INSTRUCTIONS_MESSAGE);
                     break;
             }
         }

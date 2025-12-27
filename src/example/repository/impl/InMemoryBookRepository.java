@@ -12,15 +12,15 @@ public class InMemoryBookRepository implements BookRepository {
     private final static List<Book> BOOK_LIST = new ArrayList<>();
 
     @Override
-    public int saveNewBook(Book book) {
+    public String saveNewBook(Book book) {
         BOOK_LIST.add(book);
         return book.getId();
     }
 
     @Override
-    public Optional<Book> getBookById(int id) {
+    public Optional<Book> getBookById(String id) {
         for (Book book : BOOK_LIST) {
-            if (book.getId() == id) {
+            if (book.getId().equals(id)) {
                 return Optional.of(book);
             }
         }

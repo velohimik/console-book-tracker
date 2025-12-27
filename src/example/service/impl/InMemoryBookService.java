@@ -5,27 +5,31 @@ import example.model.Book;
 import example.repository.BookRepository;
 import example.repository.impl.InMemoryBookRepository;
 import example.service.BookService;
-import example.service.Validator;
+import example.validator.SaveBookValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InMemoryBookService implements BookService {
 
-    private static final String SUCCESSFUL_SAVING_MESSAGE = "The book is saved successfully with id=%s.";
-    private static final String EMPTY_BOOK_LIST_MESSAGE = "There are no books in your list. Please add one.";
+    private static final String SUCCESSFUL_SAVING_MESSAGE = "The book is saved successfully with id = \"%s\".\n";
+    private static final String EMPTY_BOOK_LIST_MESSAGE = "There are no books in your library. Please add one.\n";
     private final BookRepository bookRepository = new InMemoryBookRepository();
-    private final Validator saveBookValidator;
+    private final SaveBookValidator saveBookValidator;
 
     public InMemoryBookService() {
         this.saveBookValidator = new SaveBookValidator(bookRepository);
     }
 
     @Override
-    public String processNewBook(Book book) {
-        List<Error> errors = saveBookValidator.validate(book);
+    public String saveNewBook(String title, String author, String year) {
+        List<Error> errors = new ArrayList<>();
+        saveBookValidator.checkTheBookTitleIsAlreadyExist(title).ifPresent(errors::add);
+        saveBookValidator.checkBookYearIsInPast(year).ifPresent(errors::add);
         if (errors.isEmpty()) {
-            int savedBookId = bookRepository.saveNewBook(book);
+            Book newBook = Book.createNewBook(title, author, year);
+            String savedBookId = bookRepository.saveNewBook(newBook);
             return String.format(SUCCESSFUL_SAVING_MESSAGE, savedBookId);
         } else {
             StringBuilder stringBuilder = new StringBuilder();
@@ -38,7 +42,7 @@ public class InMemoryBookService implements BookService {
     }
 
     @Override
-    public String findBookById(int id) {
+    public String findBookById(String id) {
         Optional<Book> foundBook = bookRepository.getBookById(id);
         if (foundBook.isPresent()) {
             return foundBook.get().toString();

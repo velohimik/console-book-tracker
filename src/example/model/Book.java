@@ -1,37 +1,36 @@
 package example.model;
 
 import java.time.Year;
+import java.util.UUID;
 
 public class Book {
 
-    private static int idCounter = 1;
-
-    private final Integer id;
+    private final UUID id;
     private final String title;
     private final String author;
     private final Year year;
 
     private Book(String title, String author, Year year) {
-        this.id = idCounter++;
+        this.id = UUID.randomUUID();
         this.title = title;
         this.author = author;
         this.year = year;
     }
 
     public static Book createNewBook(String title, String author, String year) {
-        return new Book(title, author, Year.parse(year));
+        if (title != null && author != null && year != null) {
+            return new Book(title, author, Year.parse(year));
+        } else {
+            throw new RuntimeException("Book can't be created with null fields");
+        }
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return id.toString();
     }
 
     public String getTitle() {
         return title;
-    }
-
-    public Year getYear() {
-        return year;
     }
 
     @Override

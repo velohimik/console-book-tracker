@@ -1,10 +1,8 @@
 package example.service;
 
-import example.model.Book;
-
 public interface BookService {
 
-    String processNewBook(Book book);
-    String findBookById(int id);
+    String saveNewBook(String title, String author, String year);
+    String findBookById(String id);
     String getAllBooks();
 }
