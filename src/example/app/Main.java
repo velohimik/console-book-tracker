@@ -1,7 +1,9 @@
 package example.app;
 
+import example.repository.BookRepository;
+import example.repository.impl.InMemoryBookRepository;
 import example.service.BookService;
-import example.service.impl.InMemoryBookService;
+import example.service.impl.SimpleBookService;
 import example.validator.UserInputValidator;
 
 import java.util.Scanner;
@@ -30,7 +32,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         UserInputValidator validator = new UserInputValidator();
         String userChoice;
-        BookService bookService = new InMemoryBookService();
+        BookRepository bookRepository = new InMemoryBookRepository();
+        BookService bookService = new SimpleBookService(bookRepository);
 
         System.out.println(WELCOME_MESSAGE);
 

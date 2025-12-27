@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class InMemoryBookService implements BookService {
+public class SimpleBookService implements BookService {
 
     private static final String SUCCESSFUL_SAVING_MESSAGE = "The book is saved successfully with id = \"%s\".\n";
     private static final String EMPTY_BOOK_LIST_MESSAGE = "There are no books in your library. Please add one.\n";
-    private final BookRepository bookRepository = new InMemoryBookRepository();
+    private final BookRepository bookRepository;
     private final SaveBookValidator saveBookValidator;
 
-    public InMemoryBookService() {
+    public SimpleBookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
         this.saveBookValidator = new SaveBookValidator(bookRepository);
     }
 
