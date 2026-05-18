@@ -1,12 +1,12 @@
-package example.repository.impl;
+package com.velohimik.repository.impl;
 
-import example.model.Book;
-import example.repository.BookRepository;
+import com.velohimik.model.Book;
+import com.velohimik.repository.BookRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ReadOnlyBookRepository implements BookRepository {
+public class FileBookRepository implements BookRepository {
 
     private static final List<Book> BOOKS = List.of(
             Book.createNewBook("Any Title", "Anyone", "2000"),
@@ -14,12 +14,12 @@ public class ReadOnlyBookRepository implements BookRepository {
 
     @Override
     public String saveNewBook(Book book) {
-        return "This is a read-only implementation of BookRepository interface. You can't add new books";
+        return book.getId();
     }
 
     @Override
     public Optional<Book> getBookById(String id) {
-        return Optional.ofNullable(BOOKS.getFirst());
+        return Optional.empty();
     }
 
     @Override

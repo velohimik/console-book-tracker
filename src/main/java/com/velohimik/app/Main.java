@@ -1,10 +1,10 @@
-package example.app;
+package com.velohimik.app;
 
-import example.repository.BookRepository;
-import example.repository.impl.InMemoryBookRepository;
-import example.service.BookService;
-import example.service.impl.SimpleBookService;
-import example.validator.UserInputValidator;
+import com.velohimik.repository.BookRepository;
+import com.velohimik.repository.impl.InMemoryBookRepository;
+import com.velohimik.service.BookService;
+import com.velohimik.service.impl.SimpleBookService;
+import com.velohimik.validator.UserInputValidator;
 
 import java.util.Scanner;
 

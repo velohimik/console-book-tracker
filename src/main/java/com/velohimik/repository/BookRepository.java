@@ -1,6 +1,6 @@
-package example.repository;
+package com.velohimik.repository;
 
-import example.model.Book;
+import com.velohimik.model.Book;
 
 import java.util.List;
 import java.util.Optional;

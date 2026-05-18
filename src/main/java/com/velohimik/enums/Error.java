@@ -1,4 +1,4 @@
-package example.enums;
+package com.velohimik.enums;
 
 public enum Error {
 

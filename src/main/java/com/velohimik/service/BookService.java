@@ -1,4 +1,4 @@
-package example.service;
+package com.velohimik.service;
 
 public interface BookService {
 

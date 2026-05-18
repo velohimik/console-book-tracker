@@ -1,4 +1,4 @@
-package example.validator;
+package com.velohimik.validator;
 
 public class UserInputValidator {
 

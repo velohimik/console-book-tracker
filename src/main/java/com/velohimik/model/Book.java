@@ -1,4 +1,4 @@
-package example.model;
+package com.velohimik.model;
 
 import java.time.Year;
 import java.util.UUID;

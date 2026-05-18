@@ -1,7 +1,7 @@
-package example.repository.impl;
+package com.velohimik.repository.impl;
 
-import example.model.Book;
-import example.repository.BookRepository;
+import com.velohimik.model.Book;
+import com.velohimik.repository.BookRepository;
 
 import java.util.ArrayList;
 import java.util.List;

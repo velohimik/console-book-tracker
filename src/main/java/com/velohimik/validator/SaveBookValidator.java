@@ -1,8 +1,8 @@
-package example.validator;
+package com.velohimik.validator;
 
-import example.enums.Error;
-import example.model.Book;
-import example.repository.BookRepository;
+import com.velohimik.enums.Error;
+import com.velohimik.model.Book;
+import com.velohimik.repository.BookRepository;
 
 import java.time.Year;
 import java.util.List;

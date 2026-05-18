@@ -1,11 +1,10 @@
-package example.service.impl;
+package com.velohimik.service.impl;
 
-import example.enums.Error;
-import example.model.Book;
-import example.repository.BookRepository;
-import example.repository.impl.InMemoryBookRepository;
-import example.service.BookService;
-import example.validator.SaveBookValidator;
+import com.velohimik.enums.Error;
+import com.velohimik.model.Book;
+import com.velohimik.repository.BookRepository;
+import com.velohimik.service.BookService;
+import com.velohimik.validator.SaveBookValidator;
 
 import java.util.ArrayList;
 import java.util.List;
