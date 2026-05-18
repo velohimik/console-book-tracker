@@ -8,12 +8,12 @@ cd ..
 
 #Compiling
 echo "Compiling..."
-javac -d ./out -cp ./src/main/java/ ./src/main/java/com/velohimik/app/Main.java
+javac -d ./out -cp ./src/main/java/ ./src/main/java/com/velohimik/ConsoleBookTracker.java
 echo "Compiling is finished successfully"
 
 #Add manifest file
 echo "Adding manifest file..."
-echo "Main-Class: example.app.Main">./out/manifest.mf
+echo "Main-Class: com.velohimik.ConsoleBookTracker">./out/manifest.mf
 
 #Package to jar file
 echo "Packaging..."

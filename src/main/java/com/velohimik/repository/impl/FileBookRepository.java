@@ -5,6 +5,7 @@ import com.velohimik.repository.BookRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class FileBookRepository implements BookRepository {
 
@@ -13,12 +14,12 @@ public class FileBookRepository implements BookRepository {
             Book.createNewBook("No one knows", "Nemo", "1900"));
 
     @Override
-    public String saveNewBook(Book book) {
+    public UUID saveNewBook(Book book) {
         return book.getId();
     }
 
     @Override
-    public Optional<Book> getBookById(String id) {
+    public Optional<Book> getBookById(UUID id) {
         return Optional.empty();
     }
 

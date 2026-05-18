@@ -9,6 +9,7 @@ import com.velohimik.validator.SaveBookValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class SimpleBookService implements BookService {
 
@@ -29,7 +30,7 @@ public class SimpleBookService implements BookService {
         saveBookValidator.checkBookYearIsInPast(year).ifPresent(errors::add);
         if (errors.isEmpty()) {
             Book newBook = Book.createNewBook(title, author, year);
-            String savedBookId = bookRepository.saveNewBook(newBook);
+            UUID savedBookId = bookRepository.saveNewBook(newBook);
             return String.format(SUCCESSFUL_SAVING_MESSAGE, savedBookId);
         } else {
             StringBuilder stringBuilder = new StringBuilder();
@@ -43,7 +44,7 @@ public class SimpleBookService implements BookService {
 
     @Override
     public String findBookById(String id) {
-        Optional<Book> foundBook = bookRepository.getBookById(id);
+        Optional<Book> foundBook = bookRepository.getBookById(UUID.fromString(id));
         if (foundBook.isPresent()) {
             return foundBook.get().toString();
         }

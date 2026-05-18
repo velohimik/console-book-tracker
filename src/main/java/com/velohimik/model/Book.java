@@ -25,8 +25,8 @@ public class Book {
         }
     }
 
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {

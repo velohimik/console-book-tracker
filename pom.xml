@@ -21,7 +21,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.velohimik.app.Main</mainClass>
+                            <mainClass>com.velohimik.CLIManager.ApplicationUI</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
