@@ -21,7 +21,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.velohimik.CLIManager.ApplicationUI</mainClass>
+                            <mainClass>com.velohimik.ConsoleBookTracker</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
