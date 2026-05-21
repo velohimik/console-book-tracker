@@ -1,12 +1,10 @@
 package com.velohimik.validator;
 
-import com.velohimik.enums.Error;
-import com.velohimik.model.Book;
+import com.velohimik.exceptions.ExistingBookTitleException;
+import com.velohimik.exceptions.InvalidPublishedYearException;
 import com.velohimik.repository.BookRepository;
 
 import java.time.Year;
-import java.util.List;
-import java.util.Optional;
 
 public class SaveBookValidator {
 
@@ -16,22 +14,19 @@ public class SaveBookValidator {
         this.bookRepository = bookRepository;
     }
 
-    public Optional<Error> checkTheBookTitleIsAlreadyExist(String bookTitle) {
-        List<Book> bookList = bookRepository.getBookList();
-        for (Book book : bookList) {
-            if (book.getTitle().equals(bookTitle)) {
-                return Optional.of(Error.EXISTING_TITLE);
-            }
+    public void checkTheBookTitleIsAlreadyExist(String bookTitle) {
+        boolean titleIsAlreadyExists = bookRepository.getBookList()
+                .stream()
+                .anyMatch(book -> book.getTitle().equalsIgnoreCase(bookTitle));
+        if (titleIsAlreadyExists) {
+            throw new ExistingBookTitleException("The book with title %s already exists in the library".formatted(bookTitle));
         }
-
-        return Optional.empty();
     }
 
-    public Optional<Error> checkBookYearIsInPast(String bookYear) {
-        if (Year.parse(bookYear).compareTo(Year.now()) > 0) {
-            return Optional.of(Error.INCORRECT_YEAR);
+    public void checkBookYearIsInPast(String bookYear) {
+        boolean yearIsFuture = Year.parse(bookYear).compareTo(Year.now()) > 0;
+        if (yearIsFuture) {
+            throw new InvalidPublishedYearException("Entered published year %s is a future year".formatted(bookYear));
         }
-
-        return Optional.empty();
     }
 }

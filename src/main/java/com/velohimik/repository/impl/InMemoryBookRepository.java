@@ -20,13 +20,9 @@ public class InMemoryBookRepository implements BookRepository {
 
     @Override
     public Optional<Book> getBookById(UUID id) {
-        for (Book book : BOOK_LIST) {
-            if (book.getId().equals(id)) {
-                return Optional.of(book);
-            }
-        }
-
-        return Optional.empty();
+        return BOOK_LIST.stream()
+                .filter(book -> book.getId().equals(id))
+                .findFirst();
     }
 
     @Override

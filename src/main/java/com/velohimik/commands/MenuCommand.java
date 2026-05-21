@@ -1,7 +1,7 @@
-package com.velohimik.command;
+package com.velohimik.commands;
 
 public interface MenuCommand {
 
-    void execute();
+    String execute();
     String getDescription();
 }

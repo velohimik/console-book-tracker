@@ -1,5 +1,6 @@
 package com.velohimik;
 
+import com.velohimik.reader.ConsoleInputReader;
 import com.velohimik.ui.CLIManager;
 import com.velohimik.repository.BookRepository;
 import com.velohimik.repository.impl.InMemoryBookRepository;
@@ -11,11 +12,13 @@ import java.util.Scanner;
 
 public class ConsoleBookTracker {
 
-    public static void main(String[] args) {
+    static void main() {
         BookRepository bookRepository = new InMemoryBookRepository();
         BookService bookService = new SimpleBookService(bookRepository);
         UserInputValidator userInputValidator = new UserInputValidator();
         Scanner scanner = new Scanner(System.in);
-        CLIManager.run(bookService, userInputValidator, scanner);
+        ConsoleInputReader consoleInputReader = new ConsoleInputReader(scanner, userInputValidator);
+
+        CLIManager.run(bookService, consoleInputReader);
     }
 }
